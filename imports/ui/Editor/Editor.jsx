@@ -45,6 +45,7 @@ export default class Editor extends Component {
 
   selectControl = (index) => {
     this.setState({selectedControl: index});
+    console.log(this.state.selectedControl);
   }
 
   renderBottomToolbar = () => {
@@ -55,16 +56,16 @@ export default class Editor extends Component {
     return (
     <Ons.BottomToolbar className='ons-toolbar'> 
         <div className='left'>
-        <Ons.ToolbarButton >
+        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 0)} >
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
-        <Ons.ToolbarButton >
+        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 1)} >
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
-        <Ons.ToolbarButton >
+        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 2)} >
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
-        <Ons.ToolbarButton >
+        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 3)} >
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
         </div>
@@ -95,7 +96,7 @@ export default class Editor extends Component {
             onLoading={this.loading} onLoadingFinish={this.loadingFinish}
             ampm={this.state.ampm}
           />
-          <Ons.Carousel onPostChange={this.handleChange} index={this.state.index}>
+          <Ons.Carousel onPostChange={this.handleChange} index={this.state.selectedControl}>
             {controls.map((item, index) => (
               <Ons.CarouselItem key={index}>
                 {item}

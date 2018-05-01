@@ -1,0 +1,42 @@
+{
+  "_from": "bulma-scss-meteor@^0.6.0",
+  "_id": "bulma-scss-meteor@0.6.0",
+  "_inBundle": false,
+  "_integrity": "sha1-V8vodR+MTOdPvvsvRQODNLe3LDA=",
+  "_location": "/bulma-scss-meteor",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "bulma-scss-meteor@^0.6.0",
+    "name": "bulma-scss-meteor",
+    "escapedName": "bulma-scss-meteor",
+    "rawSpec": "^0.6.0",
+    "saveSpec": null,
+    "fetchSpec": "^0.6.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bulma-scss-meteor/-/bulma-scss-meteor-0.6.0.tgz",
+  "_shasum": "57cbe8751f8c4ce74fbefb2f45038334b7b72c30",
+  "_spec": "bulma-scss-meteor@^0.6.0",
+  "_where": "/home/zerotwo/Projects/meteor-app",
+  "author": {
+    "name": "Eddie Jung"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Bulma scss files for Meteor",
+  "keywords": [
+    "bulma"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "bulma-scss-meteor",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.6.0"
+}
