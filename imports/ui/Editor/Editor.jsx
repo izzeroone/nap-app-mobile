@@ -3,14 +3,14 @@ import c from 'classnames'
 
 import React, {Component} from 'react'
 
-// import Header from './Header.jsx'
-// import ToolBar from './ToolBar.jsx'
-// import Link from '../common/Link.jsx'
 import Chart from './Chart.jsx'
-import Controls from './Controls.jsx'
-// import Controls from './sections/Controls.jsx'
-// import Polyphasic from './sections/Polyphasic.jsx'
 import Cookies from 'js-cookie';
+
+import ColorPicker from './Control/ColorPicker'
+import Lanes from './Control/Lanes'
+import SelectedElement from './Control/SelectedElement'
+import Shapes from './Control/Shapes'
+import SuperLanes from './Control/SuperLanes'
 
 import './Editor.scss'
 
@@ -27,21 +27,14 @@ export default class Editor extends Component {
       description: window.description || '',
       currentSection: this.getInitialSection(),
       ampm: this.getAmpm(),
-      items: [
-        '#F1948A',
-        '#D7BDE2',
-        '#85C1E9',
-        '#73C6B6',
-      ],
-      index: 0
+      selectedControl: 0
     }
   }
 
   renderToolbar() {
     return (
       <Ons.Toolbar>
-        <div className='center'>My app</div>
-        <div className='right'>
+        <div className='left'>
         <Ons.ToolbarButton>
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
@@ -50,12 +43,28 @@ export default class Editor extends Component {
     )
   } 
 
-  renderBottomToolbar(){
+  selectControl = (index) => {
+    this.setState({selectedControl: index});
+  }
+
+  renderBottomToolbar = () => {
+    let controls = [{
+      content: "FFuck",
+      toolbarButton: "Stupdid fucking button"
+    }];
     return (
-    <Ons.BottomToolbar modifier="material"> 
-        <div className='center'>My app</div>
-        <div className='right'>
-        <Ons.ToolbarButton>
+    <Ons.BottomToolbar className='ons-toolbar'> 
+        <div className='left'>
+        <Ons.ToolbarButton >
+          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
+        </Ons.ToolbarButton>
+        <Ons.ToolbarButton >
+          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
+        </Ons.ToolbarButton>
+        <Ons.ToolbarButton >
+          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
+        </Ons.ToolbarButton>
+        <Ons.ToolbarButton >
           <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
         </Ons.ToolbarButton>
         </div>
@@ -63,14 +72,19 @@ export default class Editor extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({index: e.activeIndex});
+    this.setState({selectedControl: e.activeIndex});
   }
 
   setIndex = (index) => {
-    this.setState({index: index});
+    this.setState({selectedControl: index});
   }
 
   render() {
+    let controls = [
+      <SelectedElement napchart={this.state.napchart}/>,
+      <Shapes napchart={this.state.napchart}/>,
+      <SuperLanes napchart={this.state.napchart}/>
+    ]
 
     return (
         <Ons.Page renderToolbar={this.renderToolbar} renderBottomToolbar={this.renderBottomToolbar}>
@@ -82,12 +96,10 @@ export default class Editor extends Component {
             ampm={this.state.ampm}
           />
           <Ons.Carousel onPostChange={this.handleChange} index={this.state.index}>
-            {this.state.items.map((item, index) => (
-              <Ons.CarouselItem key={index} style={{backgroundColor: item}}>
-                <div style={{marginTop: '50%', textAlign: 'center'}}>
-                  Swipe me!
-                </div>
-                </Ons.CarouselItem>
+            {controls.map((item, index) => (
+              <Ons.CarouselItem key={index}>
+                {item}
+              </Ons.CarouselItem>
             ))}
           </Ons.Carousel>
         </Ons.Page>
