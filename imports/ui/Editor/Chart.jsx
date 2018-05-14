@@ -58,6 +58,10 @@ export default class Chart extends Component {
   }
 
   initializeChart() {
+    let storage = window.localStorage;
+    let schedule = JSON.parse(storage.getItem("schedule"));
+    console.log(schedule);
+
     var canvas = this.refs[this.state.id]
     var ctx = canvas.getContext('2d')
 
@@ -78,6 +82,8 @@ export default class Chart extends Component {
         event.stopPropagation()
         return false
       }
+
+      napchart.data.elements = schedule;
 
       this.props.setGlobalNapchart(napchart)
 

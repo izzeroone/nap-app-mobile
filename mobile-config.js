@@ -1,0 +1,1 @@
+App.setPreference('AndroidExtraFilesystems', 'files,files-external');

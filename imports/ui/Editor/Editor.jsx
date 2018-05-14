@@ -11,7 +11,8 @@ import Lanes from './Control/Lanes'
 import SelectedElement from './Control/SelectedElement'
 import Shapes from './Control/Shapes'
 import SuperLanes from './Control/SuperLanes'
-import Schedule from './Control/Schedule'
+import Schedule from './Control/Schedule1'
+import {Meteor} from 'meteor/meteor'
 
 export default class Editor extends Component {
   constructor(props) {
@@ -21,20 +22,19 @@ export default class Editor extends Component {
       napchart: false, // until it is initialized
       ampm: this.getAmpm(),
       selectedControl: 0,
-      showSchedule: false
+      toastShown: false
     }
   }
-
-
+  
   renderToolbar = () => {
     return (  
       <Ons.Toolbar>
         <div className='left'>Sleep Planning</div>
         <div className='right'>
-        <Ons.ToolbarButton>
+        <Ons.ToolbarButton onClick={this.setAlarm}>
           <Ons.Icon icon='md-alarm'></Ons.Icon>
         </Ons.ToolbarButton>
-        <Ons.ToolbarButton>
+        <Ons.ToolbarButton onClick={this.saveSchedule}>
           <Ons.Icon icon='md-floppy'></Ons.Icon>
         </Ons.ToolbarButton>
         </div>
@@ -56,10 +56,14 @@ export default class Editor extends Component {
   renderBottomToolbar = () => {
     return (
     <Ons.BottomToolbar className='ons-toolbar'> 
-        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 0)}>Color</Ons.Button>
-        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 1)}>Shape</Ons.Button>
-        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 2)}>Lanes</Ons.Button>
-        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 3)}>Schedule</Ons.Button>
+        <div className="center">
+          <Ons.Segment index={this.state.selectedControl} onPostChange={() => this.setState({ selectedControl: event.index})} style={{ width: '100%' }}>
+                <button  style={{ width: '25%' }}>Element</button>
+                <button  style={{ width: '25%' }}>Shape</button>
+                <button  style={{ width: '25%' }}>Lanes</button>
+                <button  style={{ width: '25%' }}>Schedule</button>
+          </Ons.Segment>
+        </div>
     </Ons.BottomToolbar>)
   }
 
@@ -67,8 +71,8 @@ export default class Editor extends Component {
     this.setState({selectedControl: e.activeIndex});
   }
 
-  setIndex = (index) => {
-    this.setState({selectedControl: index});
+  toggleToast = (e) => {
+    this.setState({toastShown: !this.state.toastShown});
   }
 
   render() {
@@ -98,18 +102,19 @@ export default class Editor extends Component {
               </Ons.CarouselItem>
             ))}
           </Ons.Carousel>
+        <Ons.Toast isOpen={this.state.toastShown}>
+          <div className="message">
+            An error has occurred!
+          </div>
+          <button onClick={this.toggleToast}>
+            Dismiss
+          </button>
+        </Ons.Toast>
         </Ons.Page>
     )
   }
 
 
-  
-
-  changeSection = (i) => {
-    this.setState({
-      currentSection: i
-    })
-  }
 
   setGlobalNapchart = (napchart) => {
     this.setState({
@@ -152,6 +157,16 @@ export default class Editor extends Component {
     this.setState({
       ampm: ampm
     })
+  }
+
+  saveSchedule = () => { 
+    let storage = window.localStorage;
+    storage.setItem("schedule", JSON.stringify(this.state.napchart.data.elements));
+    console.log(storage);
+  }
+
+  setAlarm = () => {
+    console.log(this.state.napchart.data.elements);
   }
 
 }
