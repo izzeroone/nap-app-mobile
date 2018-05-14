@@ -19,14 +19,9 @@ export default class Editor extends Component {
 
     this.state = {
       napchart: false, // until it is initialized
-      loading: false,
-      url: window.siteUrl,
-      chartid: window.chartid,
-      title: window.title || '',
-      description: window.description || '',
-      currentSection: this.getInitialSection(),
       ampm: this.getAmpm(),
-      selectedControl: 0
+      selectedControl: 0,
+      showSchedule: false
     }
   }
 
@@ -52,6 +47,12 @@ export default class Editor extends Component {
     console.log(this.state.selectedControl);
   }
 
+  toggleSchedule = () => {
+    this.setState({
+      showSchedule: !this.state.showSchedule
+    })
+  }
+
   renderBottomToolbar = () => {
     return (
     <Ons.BottomToolbar className='ons-toolbar'> 
@@ -74,9 +75,10 @@ export default class Editor extends Component {
     let controls = [
       <SelectedElement napchart={this.state.napchart}/>,
       <Shapes napchart={this.state.napchart}/>,
-      <SuperLanes napchart={this.state.napchart}/>
-      // <Schedule napchart={this.state.napchart}/>
+      <SuperLanes napchart={this.state.napchart}/>,
+      <Schedule napchart={this.state.napchart}/>
     ]
+
 
     return (
         <Ons.Page 
@@ -101,11 +103,7 @@ export default class Editor extends Component {
   }
 
 
-  slideSidebarMobile = () => {
-    this.setState({
-      slideSidebarMobile: !this.state.slideSidebarMobile
-    })
-  }
+  
 
   changeSection = (i) => {
     this.setState({
@@ -123,29 +121,6 @@ export default class Editor extends Component {
     this.forceUpdate()
   }
 
-  loadingFinish = () => {
-    this.setState({
-      loading: false
-    })
-  }
-
-  loading = () => {
-    this.setState({
-      loading: true
-    })
-  }
-
-  changeTitle = event => {
-    this.setState({
-      title: event.target.value
-    })
-  }
-
-  changeDescription = event => {
-    this.setState({
-      description: event.target.value
-    })
-  }
 
   setNumberOfLanes = (lanes) => {
     console.log(lanes)
@@ -179,14 +154,4 @@ export default class Editor extends Component {
     })
   }
 
-  getInitialSection = () => {
-    // should always return 0 except when s=1 found in url, because
-    // then the user just saved chart and we will show share section instead
-
-    if (window.location.toString().includes('s=1')) {
-      return 1
-    }
-
-    return 0
-  }
 }

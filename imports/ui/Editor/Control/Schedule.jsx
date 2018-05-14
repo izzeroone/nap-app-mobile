@@ -59,6 +59,10 @@ export default class Schedule extends React.Component {
   }
 
   calculateDuration = (schedule) => {
+    if(this.props.napchart === false){
+      return;
+    }
+    
     var helpers = this.props.napchart.helpers
     const minutes = schedule.elements.reduce((minutes, element) => {
       return minutes + helpers.duration(element.start, element.end)
