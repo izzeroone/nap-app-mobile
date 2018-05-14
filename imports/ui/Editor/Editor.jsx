@@ -11,8 +11,7 @@ import Lanes from './Control/Lanes'
 import SelectedElement from './Control/SelectedElement'
 import Shapes from './Control/Shapes'
 import SuperLanes from './Control/SuperLanes'
-
-import './Editor.scss'
+import Schedule from './Control/Schedule'
 
 export default class Editor extends Component {
   constructor(props) {
@@ -31,12 +30,17 @@ export default class Editor extends Component {
     }
   }
 
-  renderToolbar() {
-    return (
+
+  renderToolbar = () => {
+    return (  
       <Ons.Toolbar>
-        <div className='left'>
+        <div className='left'>Sleep Planning</div>
+        <div className='right'>
         <Ons.ToolbarButton>
-          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
+          <Ons.Icon icon='md-alarm'></Ons.Icon>
+        </Ons.ToolbarButton>
+        <Ons.ToolbarButton>
+          <Ons.Icon icon='md-floppy'></Ons.Icon>
         </Ons.ToolbarButton>
         </div>
       </Ons.Toolbar>
@@ -49,26 +53,12 @@ export default class Editor extends Component {
   }
 
   renderBottomToolbar = () => {
-    let controls = [{
-      content: "FFuck",
-      toolbarButton: "Stupdid fucking button"
-    }];
     return (
     <Ons.BottomToolbar className='ons-toolbar'> 
-        <div className='left'>
-        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 0)} >
-          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
-        </Ons.ToolbarButton>
-        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 1)} >
-          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
-        </Ons.ToolbarButton>
-        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 2)} >
-          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
-        </Ons.ToolbarButton>
-        <Ons.ToolbarButton onClick={this.selectControl.bind(this, 3)} >
-          <Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>
-        </Ons.ToolbarButton>
-        </div>
+        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 0)}>Color</Ons.Button>
+        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 1)}>Shape</Ons.Button>
+        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 2)}>Lanes</Ons.Button>
+        <Ons.Button style={{width: '25%'}} onClick={this.selectControl.bind(this, 3)}>Schedule</Ons.Button>
     </Ons.BottomToolbar>)
   }
 
@@ -85,10 +75,13 @@ export default class Editor extends Component {
       <SelectedElement napchart={this.state.napchart}/>,
       <Shapes napchart={this.state.napchart}/>,
       <SuperLanes napchart={this.state.napchart}/>
+      // <Schedule napchart={this.state.napchart}/>
     ]
 
     return (
-        <Ons.Page renderToolbar={this.renderToolbar} renderBottomToolbar={this.renderBottomToolbar}>
+        <Ons.Page 
+        renderToolbar={this.renderToolbar}
+        renderBottomToolbar={this.renderBottomToolbar}>
           <Chart
             napchart={this.state.napchart}
             onUpdate={this.somethingUpdate}
