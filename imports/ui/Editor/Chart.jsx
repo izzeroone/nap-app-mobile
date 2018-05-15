@@ -82,8 +82,9 @@ export default class Chart extends Component {
         event.stopPropagation()
         return false
       }
-
-      napchart.data.elements = schedule;
+      if(schedule != null){
+        napchart.data.elements = schedule;
+      }
 
       this.props.setGlobalNapchart(napchart)
 

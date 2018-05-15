@@ -167,6 +167,9 @@ export default class Editor extends Component {
 
   setAlarm = () => {
     console.log(this.state.napchart.data.elements);
+    this.state.napchart.data.elements.forEach(element => {
+      Cordova.zerotwos.setAlarm(2, 23);
+    });
   }
 
 }

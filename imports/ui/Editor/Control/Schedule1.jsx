@@ -26,6 +26,7 @@ export default class Schedule extends React.Component {
           scheduleInfo: schedule.info,
           recommendFor: schedule.recommend
         })
+        this.changeSchedule(schedule);
         return;
       }      
     });
